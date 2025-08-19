@@ -106,33 +106,27 @@ export default function Hero() {
                     <Pointer color="red" name="Brew" />
                 </motion.div>
 
-                <div className="flex justify-center">
-                    <div className="inline-flex py-1 px-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full text-neutral-950 font-semibold">
-                        ✨ $7.5M eed round raised
-                    </div>
-                </div>
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-medium text-center mt-6 ">
-                    Impactful design, created effortlessly
+                <h1 className="text-6xl md:text-7xl lg:text-8xl font-medium text-center mt-6">
+                    Stop the bio chaos. <br /> Start <a className="text-lime-400">Linko.</a>
+                                                                            
+
+
                 </h1>
                 <p className="text-center text-xl text-white/50 mt-8 max-w-2xl mx-auto">
-                    Design tool shouldn't slow you down. Create, prototype, and
-                    test with ease.
+                    All your socials, content and creds in one clean, scroll-proof link. Fast to make, easy to <a className="text-lime-400">flex.</a>
                 </p>
-                <form className="mx-auto flex border border-white/50 rounded-full p-2 mt-8 max-w-lg">
-                    <input
-                        type="email"
-                        placeholder="Enter your email"
-                        className="bg-transparent px-4 flex-1 w-full"
-                    />
+                {/* CTA: "Start Linko" */}
+
+                <div className="mx-auto text-center mt-8 max-w-xl">
                     <Button
                         size="sm"
                         className="whitespace-nowrap"
                         type="submit"
                         variant="primary"
                     >
-                        Sign Up
+                        <a href="#signup"></a>Sign Up
                     </Button>
-                </form>
+                </div>
             </div>
         </section>
     );

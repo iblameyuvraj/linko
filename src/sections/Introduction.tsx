@@ -10,7 +10,9 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-const text = `You're racing to create exceptional work, but traditional design tools slow you down with unnecessary complexity and steep learning curves.`;
+// 🔥 Gen Z style punchline
+const text = `Links shouldn’t be lame. They should flex your vibe, rep your identity, and travel everywhere you do. 
+Copy paste is dead. With Linko, your links trend, spread, and stick — just like you.`;
 const words = text.split(" ");
 
 export default function Introduction() {
@@ -36,15 +38,14 @@ export default function Introduction() {
     );
 
     return (
-        <section className="py-28 lg:py-40  ">
+        <section className="py-28 lg:py-40">
             <div className="container">
                 <div className="sticky top-28 md:top-32">
                     <div className="flex justify-center">
-                        <Tag>Introduction Layers</Tag>
+                        <Tag>Why Linko?</Tag>
                     </div>
-                    <div className="text-4xl md:text-6xl lg:text-7xl text-center font-medium mt-10 ">
-                        <span>Your crative process deserves better.&nbsp;</span>
-                        <span className="text-white/15 ">
+                    <div className="text-4xl md:text-6xl lg:text-7xl text-center font-medium mt-10">
+                        <span className="text-white/15">
                             {words.map((word, wordIndex) => (
                                 <span
                                     key={wordIndex}
@@ -55,8 +56,8 @@ export default function Introduction() {
                                 >{`${word} `}</span>
                             ))}
                         </span>
-                        <span className="text-lime-400 block">
-                            That&apos;s why we built Layers.
+                        <span className="text-lime-400 block mt-6">
+                        That's why we built Linko.
                         </span>
                     </div>
                 </div>
