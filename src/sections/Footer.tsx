@@ -1,9 +1,7 @@
  
 
 const footerLinks = [
-    { href: "#", label: "Contact" },
-    { href: "#", label: "Privacy Policy" },
-    { href: "#", label: "Terms & Conditions" },
+    { href: "https://zentha.in/", label: "Built by Zentha studio" },
 ];
 
 export default function Footer() {

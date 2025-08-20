@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +25,7 @@ export default function RootLayout({
             <body
                 className={`${inter.variable} font-sans antialiased bg-neutral-950 text-white`}
             >
+                <Script src="https://cdn.lordicon.com/lordicon.js" strategy="afterInteractive" />
                 {children}
             </body>
         </html>

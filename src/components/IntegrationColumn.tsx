@@ -2,9 +2,9 @@
 
 import React, { Fragment } from "react";
 import Image from "next/image";
-import { type IntegrationsType } from "@/sections/Integrations";
 import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
+import { IntegrationsType } from "@/sections/Integrations";
 
 const IntegrationColumn = (props: {
     integrations: IntegrationsType;

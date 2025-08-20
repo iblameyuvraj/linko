@@ -50,7 +50,7 @@ export default function Navbar() {
             }
             setLoginOpen(false);
             setLoginPassword("");
-            router.push(`/${loginUsername.trim()}`);
+            router.push("/edit");
         } catch (err) {
             setError(err instanceof Error ? err.message : "Something went wrong");
         } finally {
@@ -81,7 +81,7 @@ export default function Navbar() {
             }
             setSignupOpen(false);
             setSignupPassword("");
-            router.push(`/${signupUsername.trim()}`);
+            router.push("/edit");
         } catch (err) {
             setError(err instanceof Error ? err.message : "Something went wrong");
         } finally {
