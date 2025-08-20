@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 import NextLink from "next/link"
 import Avvvatars from "avvvatars-react"
 import { getSupabaseClient } from "@/lib/supabase"
-import { Github, Dribbble, Linkedin, Globe, Codepen, Instagram, Facebook, Copy, Check } from "lucide-react"
+import { Github, Dribbble, Linkedin, Globe, Plus, Trash2, Codepen, Instagram, Facebook, Copy, Check, Edit2, Save, Mail, Ghost, Link2, Twitter,Youtube } from "lucide-react"
 
 interface Link {
   id: string
@@ -122,7 +122,7 @@ export default function UserProfile({ params }: UserProfileProps) {
         </div>
       </header>
       {/* Profile Section */}
-      <div className="max-w-md mx-auto text-center mb-8 pt-12">
+      <div className="max-w-md mx-auto text-center mb-8 pt-2">
         <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
           <Avvvatars style="shape" value={username} size={80} />
         </div>
@@ -143,7 +143,7 @@ export default function UserProfile({ params }: UserProfileProps) {
           </button>
         </div>
 
-        <div className="flex items-center justify-center gap-1 mb-6">
+        <div className="flex items-center text-bold justify-center gap-1 mb-6">
           <span className="text-white">{userData.bio}</span>
         </div>
 
@@ -159,6 +159,11 @@ export default function UserProfile({ params }: UserProfileProps) {
                 { name: "Facebook", icon: Facebook },
                 { name: "Globe", icon: Globe },
                 { name: "Codepen", icon: Codepen },
+                { name: "Email", icon: Mail },
+                { name: "Pinterest", icon: Link2 },
+                { name: "Snapchat", icon: Ghost },
+                { name: "Twitter", icon: Twitter },
+                { name: "Youtube", icon: Youtube },
               ]
               const IconComponent = platformIcons.find(s => s.name === social.platform)?.icon || Globe
               return (

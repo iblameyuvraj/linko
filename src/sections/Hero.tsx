@@ -6,10 +6,10 @@ import designExample2 from "@/assets/images/design-example-2.png";
 import Image from "next/image";
 import Pointer from "@/components/Pointer";
 import { motion, useAnimate } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import cursorImage from "@/assets/images/cursor-you.svg";
-
-
+import SignupModal from "@/components/SignupModal";
+import LoginModal from "@/components/LoginModal";
 
 export default function Hero() {
     const [leftDesignScope, leftDesignAnimate] = useAnimate();
@@ -17,6 +17,10 @@ export default function Hero() {
 
     const [rightDesignScope, rightDesignAnimate] = useAnimate();
     const [rightPointerScope, rightPointerAnimate] = useAnimate();
+
+    // Local auth modal state for this section
+    const [signupOpen, setSignupOpen] = useState(false);
+    const [loginOpen, setLoginOpen] = useState(false);
 
     useEffect(() => {
         leftDesignAnimate([
@@ -59,6 +63,7 @@ export default function Hero() {
     }, []);
 
     return (
+        <>
         <section
             className="py-24 overflow-x-clip"
             style={{
@@ -123,11 +128,30 @@ export default function Hero() {
                         className="whitespace-nowrap"
                         type="submit"
                         variant="primary"
+                        onClick={() => setSignupOpen(true)}
                     >
-                        <a href="#signup"></a>Sign Up
+                        Sign Up
                     </Button>
                 </div>
             </div>
         </section>
+        {/* Auth Modals scoped to Hero */}
+        <LoginModal
+            isOpen={loginOpen}
+            onClose={() => setLoginOpen(false)}
+            onSwitchToSignup={() => {
+                setLoginOpen(false);
+                setSignupOpen(true);
+            }}
+        />
+        <SignupModal
+            isOpen={signupOpen}
+            onClose={() => setSignupOpen(false)}
+            onSwitchToLogin={() => {
+                setSignupOpen(false);
+                setLoginOpen(true);
+            }}
+        />
+        </>
     );
 }

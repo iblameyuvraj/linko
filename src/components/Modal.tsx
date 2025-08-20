@@ -26,7 +26,7 @@ export default function Modal({ isOpen, onClose, title, className = "" , childre
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -44,7 +44,7 @@ export default function Modal({ isOpen, onClose, title, className = "" , childre
 
           {/* Dialog */}
           <motion.div
-            className={`relative z-[61] w-[90%] max-w-md rounded-2xl border border-white/15 bg-neutral-950 p-6 shadow-2xl ${className}`}
+            className={`relative z-[61] w-[90%] max-w-md rounded-2xl border border-white/15 bg-neutral-950 p-6 shadow-2xl max-h-[85vh] overflow-hidden flex flex-col ${className}`}
             initial={{ y: 20, opacity: 0, scale: 0.98 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 10, opacity: 0, scale: 0.98 }}
@@ -63,7 +63,7 @@ export default function Modal({ isOpen, onClose, title, className = "" , childre
                 <X size={20} />
               </button>
             </div>
-            <div className="mt-4">{children}</div>
+            <div className="mt-4 flex-1 min-h-0 overflow-y-auto">{children}</div>
           </motion.div>
         </motion.div>
       )}

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Button from "@/components/Button"
 import Modal from "@/components/Modal"
-import { Github, Dribbble, Linkedin, Globe, Plus, Trash2, Codepen, Instagram, Facebook, Copy, Check, Edit2, Save } from "lucide-react"
+import { Github, Dribbble, Linkedin, Globe, Plus, Trash2, Codepen, Instagram, Facebook, Copy, Check, Edit2, Save, Mail, Ghost, Link2, Twitter, Youtube } from "lucide-react"
 import Avvvatars from "avvvatars-react"
 import { getSupabaseClient } from "@/lib/supabase"
 
@@ -39,14 +39,19 @@ const socialIcons = [
   { name: "Linkedin", icon: Linkedin },
   { name: "Instagram", icon: Instagram },
   { name: "Facebook", icon: Facebook },
-  { name: "Globe", icon: Globe },
+  { name: "Any URL", icon: Globe },
   { name: "Codepen", icon: Codepen },
+  { name: "Email", icon: Mail },
+  { name: "Pinterest", icon: Link2 },
+  { name: "Snapchat", icon: Ghost },
+  { name: "Twitter", icon: Twitter },
+  { name: "Youtube", icon: Youtube },
 ]
 
 export default function EditProfile() {
   const router = useRouter()
   const [username, setUsername] = useState("")
-  const [bio, setBio] = useState("hi")
+  const [bio, setBio] = useState("Enter bio")
   const [isEditingBio, setIsEditingBio] = useState(false)
   const [tempBio, setTempBio] = useState("")
   const [links, setLinks] = useState<Link[]>([])
@@ -96,7 +101,7 @@ export default function EditProfile() {
         const initial = {
           id: user.id,
           username: fallbackUsername || user.user_metadata?.username || '',
-          bio: 'hi',
+          bio: 'Enter bio',
           links: [],
           social_links: [],
         }
@@ -109,7 +114,7 @@ export default function EditProfile() {
       } else {
         const row = existing as ProfileRow
         setUsername(row.username || fallbackUsername)
-        setBio(row.bio || 'hi')
+        setBio(row.bio || 'Enter bio')
         setLinks((row.links || []) as Link[])
         const storedSocial: StoredSocialLink[] = row.social_links || []
         setSocialLinks(storedSocial.map((s) => ({ platform: s.platform || '', url: s.url || '' })))
@@ -333,7 +338,7 @@ export default function EditProfile() {
                 type="text"
                 value={tempBio}
                 onChange={(e) => setTempBio(e.target.value)}
-                className="bg-gray-800 text-white px-2 py-1 rounded text-sm"
+                className="w-full bg-gray-900/70 text-gray-100 placeholder-gray-400 px-3 py-2 rounded-lg text-sm border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 autoFocus
               />
               <button onClick={saveBio} className="text-lime-400 hover:text-lime-300">
@@ -351,7 +356,6 @@ export default function EditProfile() {
               </button>
             </div>
           )}
-          <span className="text-sm">👋</span>
         </div>
 
         {/* Social Icons */}
@@ -413,34 +417,48 @@ export default function EditProfile() {
           ))}
 
           {/* Add New Link Button */}
-          <div className="bg-lime-400 rounded-full border-2 border-gray-900 p-6 flex items-center justify-center">
-            <button
-              onClick={() => setShowAddLink(true)}
-              className="bg-lime-400 text-black h-10 w-10 p-0 flex items-center justify-center rounded-full hover:bg-lime-500 transition"
-            >
-              <Plus className="w-6 h-6" />
-            </button>
+          <div
+            className="bg-lime-400 rounded-full border-2 border-gray-900 p-6 flex items-center justify-center hover:bg-lime-500 transition cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={() => setShowAddLink(true)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setShowAddLink(true);
+              }
+            }}
+            aria-label="Add new link"
+          >
+            <Plus className="w-6 h-6 text-black" />
           </div>
 
           {/* Share Link Button */}
-          <div className="bg-lime-400 rounded-full border-2 border-gray-900 p-6 flex items-center justify-center">
-            <button
-              onClick={shareProfile}
-              className="bg-lime-400 text-black h-10 w-10 p-0 flex items-center justify-center rounded-full hover:bg-lime-500 transition"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" 
-                 width="24" height="24" 
-                 viewBox="0 0 24 24" 
-                 fill="none" 
-                 stroke="currentColor" 
-                 strokeWidth="2" 
-                 strokeLinecap="round" 
-                 strokeLinejoin="round">
-                <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/>
-                <polyline points="16 6 12 2 8 6"/>
-                <line x1="12" y1="2" x2="12" y2="15"/>
-              </svg>
-            </button>
+          <div
+            className="bg-lime-400 rounded-full border-2 border-gray-900 p-6 flex items-center justify-center hover:bg-lime-500 transition cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={shareProfile}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                shareProfile();
+              }
+            }}
+            aria-label="Share profile"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" 
+              width="24" height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="black" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round">
+              <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/>
+              <polyline points="16 6 12 2 8 6"/>
+              <line x1="12" y1="2" x2="12" y2="15"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -516,7 +534,7 @@ export default function EditProfile() {
                 value={socialUrl}
                 onChange={(e) => setSocialUrl(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-lime-400"
-                placeholder="https://github.com/username"
+                placeholder="Enter URL"
               />
             </div>
             <div className="flex gap-3 pt-4">
