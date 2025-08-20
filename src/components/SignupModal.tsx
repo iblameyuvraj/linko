@@ -31,8 +31,17 @@ export default function SignupModal({ isOpen, onClose, onSwitchToLogin }: Signup
         body: JSON.stringify({ username: username.trim(), password, name: name.trim() }),
       });
       const json = await res.json();
-      if (!res.ok || json?.error) {
-        throw new Error(json?.error || "Signup failed");
+      if (!res.ok) {
+        const code: string | undefined = json?.error?.code;
+        const msg: string | undefined = json?.error?.message;
+        if (code === "USERNAME_TAKEN") {
+          setError("this username is already occupied");
+        } else if (code === "INVALID_CREDENTIALS") {
+          setError("username and password is wrong please try again");
+        } else {
+          setError(msg || "please refresh the website");
+        }
+        return;
       }
       const access_token: string | undefined = json?.data?.session?.access_token;
       const refresh_token: string | undefined = json?.data?.session?.refresh_token;
@@ -44,7 +53,7 @@ export default function SignupModal({ isOpen, onClose, onSwitchToLogin }: Signup
       onClose();
       router.push("/edit");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError("please refresh the website");
     } finally {
       setLoading(false);
     }

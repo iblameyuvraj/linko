@@ -30,8 +30,18 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }: LoginM
         body: JSON.stringify({ username: username.trim(), password }),
       });
       const json = await res.json();
-      if (!res.ok || json?.error) {
-        throw new Error(json?.error || "Login failed");
+      if (!res.ok) {
+        const code: string | undefined = json?.error?.code;
+        const msg: string | undefined = json?.error?.message;
+        if (code === "INVALID_CREDENTIALS") {
+          setError("username and password is wrong please try again");
+        } else if (code === "USERNAME_TAKEN") {
+          // not expected in login, but handle defensively
+          setError("this username is already occupied");
+        } else {
+          setError(msg || "please refresh the website");
+        }
+        return;
       }
       const access_token: string | undefined = json?.data?.session?.access_token;
       const refresh_token: string | undefined = json?.data?.session?.refresh_token;
@@ -43,7 +53,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }: LoginM
       onClose();
       router.push("/edit");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError("please refresh the website");
     } finally {
       setLoading(false);
     }

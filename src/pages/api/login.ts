@@ -19,10 +19,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const supabase = getSupabaseClient()
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
 
-    const status = error?.status ?? (data?.session ? 200 : 200)
-    return res.status(status).json({ data, error })
+    if (error) {
+      // Normalize known auth errors
+      const errObj = error as unknown as { status?: number; message?: string }
+      const msg = errObj?.message || ''
+      if (errObj?.status === 400 || msg.toLowerCase().includes('invalid login')) {
+        return res
+          .status(401)
+          .json({ error: { code: 'INVALID_CREDENTIALS', message: 'username and password is wrong please try again' } })
+      }
+      // Fallback unknown error
+      return res
+        .status(errObj?.status ?? 500)
+        .json({ error: { code: 'UNKNOWN', message: 'please refresh the website' } })
+    }
+
+    return res.status(200).json({ data })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Internal Server Error'
-    return res.status(500).json({ error: message })
+    return res.status(500).json({ error: { code: 'UNKNOWN', message: 'please refresh the website', detail: message } })
   }
 }
